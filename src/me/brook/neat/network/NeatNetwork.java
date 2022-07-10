@@ -1131,7 +1131,8 @@ public class NeatNetwork implements Serializable, Genetics {
 		throw new IllegalArgumentException("Transfer ID is not valid.");
 	}
 
-	public static abstract class NeatTransferFunction {
+	public static abstract class NeatTransferFunction implements Serializable {
+		private static final long serialVersionUID = 8175734649639874587L;
 
 		public abstract double getOutput(double x);
 		
@@ -1139,7 +1140,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	}
 
-	public static class RectifedLinearFunction extends NeatTransferFunction implements Serializable {
+	public static class RectifedLinearFunction extends NeatTransferFunction {
 
 		private static final long serialVersionUID = -1824433391923159453L;
 
