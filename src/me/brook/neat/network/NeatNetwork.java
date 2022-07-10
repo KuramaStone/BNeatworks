@@ -1139,7 +1139,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	}
 
-	public static class RectifedLinearFunction extends NeatTransferFunction {
+	public static class RectifedLinearFunction extends NeatTransferFunction implements Serializable {
 
 		private static final long serialVersionUID = -1824433391923159453L;
 
