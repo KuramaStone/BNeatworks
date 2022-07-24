@@ -15,7 +15,8 @@ public class ToggleInputFunction implements Serializable {
 	public double getOutput(NeatNetwork network, List<GConnection> inputConnections) {
 		double output = 0;
 
-		for(GConnection connection : inputConnections) {
+		for(int i = 0; i < inputConnections.size(); i++) {
+			GConnection connection = inputConnections.get(i);
 			if(connection.isEnabled()) {
 				NeatNeuron from = network.getNeuronByID(connection.getFromNeuron());
 				output += from.getOutput() * connection.getWeight();

@@ -13,8 +13,8 @@ public class InnovationHistory implements Serializable {
 
 	private static final long serialVersionUID = 4668872705387069086L;
 
-	private Map<InnoCoords, Innovation> innovations;
-	private int innovationIndex;
+	public Map<InnoCoords, Innovation> innovations;
+	public int innovationIndex;
 
 	public InnovationHistory() {
 		innovations = new HashMap<>();
@@ -49,8 +49,8 @@ public class InnovationHistory implements Serializable {
 
 		private static final long serialVersionUID = -4089481074551507255L;
 
-		private int fromNeuron, toNeuron;
-		private int innovation;
+		public int fromNeuron, toNeuron;
+		public int innovation;
 
 		public Innovation(int fromNeuron, int toNeuron, int innovationIndex) {
 			this.fromNeuron = fromNeuron;

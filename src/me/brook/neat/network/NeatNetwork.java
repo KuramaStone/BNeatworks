@@ -38,8 +38,6 @@ import me.brook.neat.species.InnovationHistory;
  */
 public class NeatNetwork implements Serializable, Genetics {
 
-	private static DecimalFormat df = new DecimalFormat("#.####");
-
 	private static final long serialVersionUID = 7712364365249269449L;
 
 	private transient InnovationHistory innovationHistory;
@@ -342,6 +340,8 @@ public class NeatNetwork implements Serializable, Genetics {
 	}
 
 	public void calculate() {
+		
+		// set outputs to zero
 
 		for(int i = 1; i < layers.size(); i++) {
 			layers.get(i).forEach(neuron -> {
@@ -356,7 +356,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 		List<NeatNeuron> layer = new ArrayList<>(outputNeurons.values());
 		for(int n = 0; n < output.length; n++) {
-			output[n] = layer.get(n).getOutput();
+			output[n] = layer.get(n).getInputConnections().isEmpty() ? 0 : layer.get(n).getOutput();
 		}
 
 		return output;
@@ -1019,10 +1019,10 @@ public class NeatNetwork implements Serializable, Genetics {
 		this.connections.remove(conn.getInnovationNumber());
 
 		// delete neuron if it has no inputs
-		if(from.getInputConnections().isEmpty()) {
+		if(from.getInputConnections().isEmpty() && from.layerIndex != 0 && from.layerIndex != layers.size() - 1) {
 			deleteNeuron(from);
 		}
-		if(to.getInputConnections().isEmpty()) {
+		if(to.getInputConnections().isEmpty() && to.layerIndex != 0 && to.layerIndex != layers.size() - 1) {
 			deleteNeuron(to);
 		}
 	}
@@ -1132,6 +1132,10 @@ public class NeatNetwork implements Serializable, Genetics {
 	}
 
 	public static abstract class NeatTransferFunction implements Serializable {
+
+		/**
+		 * 
+		 */
 		private static final long serialVersionUID = 8175734649639874587L;
 
 		public abstract double getOutput(double x);
@@ -1157,8 +1161,7 @@ public class NeatNetwork implements Serializable, Genetics {
 	}
 
 	public static class TanhFunction extends NeatTransferFunction {
-
-		private static final long serialVersionUID = -1824433391923159453L;
+		private static final long serialVersionUID = -4454100947802599696L;
 
 		@Override
 		public double getOutput(double totalInput) {
@@ -1174,7 +1177,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	public static class SigmoidFunction extends NeatTransferFunction {
 
-		private static final long serialVersionUID = -1824433391923159453L;
+		private static final long serialVersionUID = -4591509286924942274L;
 
 		@Override
 		public double getOutput(double totalInput) {
@@ -1190,7 +1193,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	public static class InverseFunction extends NeatTransferFunction {
 
-		private static final long serialVersionUID = -1824433391923159453L;
+		private static final long serialVersionUID = -2914536861880398418L;
 
 		@Override
 		public double getOutput(double totalInput) {
@@ -1207,8 +1210,7 @@ public class NeatNetwork implements Serializable, Genetics {
 	}
 
 	public static class SquareFunction extends NeatTransferFunction {
-
-		private static final long serialVersionUID = 3196515326195863465L;
+		private static final long serialVersionUID = -3577739683947414718L;
 
 		@Override
 		public double getOutput(double totalInput) {
@@ -1224,7 +1226,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	public static class LinearFunction extends NeatTransferFunction {
 
-		private static final long serialVersionUID = 4619424031494605104L;
+		private static final long serialVersionUID = 7518553231188382069L;
 
 		@Override
 		public double getOutput(double totalInput) {
@@ -1240,8 +1242,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	public static class BinaryFunction extends NeatTransferFunction {
 
-		private static final long serialVersionUID = 4619424031494605104L;
-
+		private static final long serialVersionUID = -5503372068309966806L;
 		public double threshold;
 
 		public BinaryFunction(double threshold) {
@@ -1265,7 +1266,7 @@ public class NeatNetwork implements Serializable, Genetics {
 
 	public static class GaussianFunction extends NeatTransferFunction {
 
-		private static final long serialVersionUID = -1824433391923159453L;
+		private static final long serialVersionUID = -3275883906527182167L;
 
 		@Override
 		public double getOutput(double totalInput) {
